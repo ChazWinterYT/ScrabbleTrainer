@@ -135,6 +135,12 @@ main > * {
     text-align: center;
 }
 
+#game-mode {
+    font-size: 1.5em;
+    color: #e0e0e0; 
+    margin-bottom: 20px;
+}
+
 .small-text {
     font-size: 0.8em;
     color: #dfb6b6; 

@@ -84,11 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function loadWordList(game) {
+    async function loadWordList(game, gameModeText) {
         const wordListUrl = `assets/${game}.json`; // URL to the word list JSON file
         const response = await fetch(wordListUrl);
         const data = await response.json();
         currentWordList = data.words;
+
+        // Update the game mode text
+        const gameModeElement = document.getElementById('game-mode');
+        gameModeElement.textContent = gameModeText;
     }
 
     function collectWordFromBoard() {
