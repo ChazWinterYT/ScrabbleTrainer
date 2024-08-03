@@ -85,12 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return collectedWord;
     }
 
+    function displayResult(message, isSuccess) {
+        const resultContainer = document.getElementById('result-container');
+        resultContainer.textContent = message;
+        resultContainer.style.color = isSuccess ? 'lime' : 'yellow';
+    }
+
     function submitWord() {
         const word = collectWordFromBoard().toUpperCase();
         if (currentWordList.includes(word)) {
-            alert(`Correct! ${word} is a valid word.`);
+            displayResult(`Correct! ${word} is a valid word.`, true);
         } else {
-            alert(`Incorrect! ${word} is not in the word list.`);
+            displayResult(`Incorrect! ${word} is not in the word list.`, false);
         }
     }
 
