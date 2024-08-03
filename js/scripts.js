@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function touchStart(e) {
         e.preventDefault();
         const tile = e.target;
+        if (!tile.classList.contains('tile')) return;
         tile.classList.add('dragging');
         const touch = e.touches[0];
         tile.style.left = `${touch.pageX - tile.offsetWidth / 2}px`;
@@ -158,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function touchMove(e) {
         e.preventDefault();
         const tile = e.target;
+        if (!tile.classList.contains('tile')) return;
         const touch = e.touches[0];
         tile.style.left = `${touch.pageX - tile.offsetWidth / 2}px`;
         tile.style.top = `${touch.pageY - tile.offsetHeight / 2}px`;
@@ -166,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function touchEnd(e) {
         e.preventDefault();
         const tile = e.target;
+        if (!tile.classList.contains('tile')) return;
         tile.classList.remove('dragging');
         const touch = e.changedTouches[0];
         const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -270,10 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateFoundWordsList() {
         const foundWordsListElement = document.getElementById('words-found-list');
         const wordsArray = Array.from(foundWords);
-        
         foundWordsListElement.textContent = `${wordsArray.length} [${wordsArray.join(', ')}]`;
-        
-        
     }
 
     function collectWordFromBoard() {
