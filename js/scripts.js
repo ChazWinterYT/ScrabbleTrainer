@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let originalWord = '';
     let foundWords = new Set();
     let possibleWords = new Set();
+    let isTouchDevice = isMobileDevice();
 
     const gameModes = {
         "two-letter-words": {
@@ -43,6 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    function isMobileDevice() {
+        return /Mobi|Android/i.test(navigator.userAgent);
+    }
+
     function createTile(letter) {
         const tile = document.createElement('div');
         tile.className = 'tile';
@@ -51,6 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
         tile.addEventListener('dragstart', dragStart);
         tile.addEventListener('dragend', dragEnd);
         tile.addEventListener('dblclick', returnToRack);
+
+        if (isTouchDevice) {
+            tile.addEventListener('touchstart', touchStart);
+            tile.addEventListener('touchmove', touchMove);
+            tile.addEventListener('touchend', touchEnd);
+        }
+
         return tile;
     }
 
@@ -92,6 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
             cell.className = 'cell';
             cell.addEventListener('dragover', dragOver);
             cell.addEventListener('drop', drop);
+
+            if (isTouchDevice) {
+                cell.addEventListener('touchstart', touchStart);
+                cell.addEventListener('touchmove', touchMove);
+                cell.addEventListener('touchend', touchEnd);
+            }
+
             board.appendChild(cell);
         }
 
@@ -124,6 +143,40 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (sourceId === 'board' && e.target.id === 'tiles-container') {
             const tile = document.querySelector(`.dragging`);
             e.target.appendChild(tile);
+        }
+    }
+
+    function touchStart(e) {
+        e.preventDefault();
+        const tile = e.target;
+        tile.classList.add('dragging');
+        const touch = e.touches[0];
+        tile.style.left = `${touch.pageX - tile.offsetWidth / 2}px`;
+        tile.style.top = `${touch.pageY - tile.offsetHeight / 2}px`;
+    }
+
+    function touchMove(e) {
+        e.preventDefault();
+        const tile = e.target;
+        const touch = e.touches[0];
+        tile.style.left = `${touch.pageX - tile.offsetWidth / 2}px`;
+        tile.style.top = `${touch.pageY - tile.offsetHeight / 2}px`;
+    }
+
+    function touchEnd(e) {
+        e.preventDefault();
+        const tile = e.target;
+        tile.classList.remove('dragging');
+        const touch = e.changedTouches[0];
+        const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (targetElement && targetElement.className.includes('cell') && !targetElement.hasChildNodes()) {
+            targetElement.appendChild(tile);
+        } else {
+            const tilesContainer = document.getElementById('tiles-container');
+            tilesContainer.appendChild(tile);
+            tile.style.left = '';
+            tile.style.top = '';
         }
     }
 
