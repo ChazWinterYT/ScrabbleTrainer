@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
     let initialTiles = [];
     let currentGameMode = '';
+    let originalWord = '';
     let foundWords = new Set();
     let possibleWords = new Set();
 
@@ -135,36 +136,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadWordList(game) {
+        // Clear the result container
+        const resultContainer = document.getElementById('result-container');
+        resultContainer.innerHTML = '';
+    
         const wordListUrl = `assets/${game}.json`; // URL to the word list JSON file
         const response = await fetch(wordListUrl);
         const data = await response.json();
         currentWordList = data.words;
-
+    
         // Update the game mode text and description
         const gameModeElement = document.getElementById('game-mode');
         const gameModeDescriptionElement = document.getElementById('game-mode-description');
         gameModeElement.textContent = gameModes[game].name;
         gameModeDescriptionElement.textContent = gameModes[game].description;
         currentGameMode = gameModes[game].name;
-
+    
         // Reset the board before rendering new tiles
         resetBoard();
         foundWords.clear();
         updateFoundWordsList();
-
+    
+        const wordsSection = document.getElementById('words-section');
+        const wordsFoundElement = document.getElementById('words-found');
+        const possibleWordsElement = document.getElementById('possible-words');
+    
         if (game === "two-letter-words" || game === "three-letter-words") {
             const randomTiles = generateRandomTiles();
             renderTiles(randomTiles);
             calculatePossibleWords(randomTiles, game);
-            document.getElementById('words-found').style.display = 'block';
-            document.getElementById('possible-words').style.display = 'block';
+            wordsSection.style.display = 'block';
+            wordsFoundElement.style.display = 'block';
+            possibleWordsElement.style.display = 'block';
         } else {
             // Select a random word and shuffle its letters
-            const randomWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase();
-            const shuffledLetters = shuffleArray(randomWord.split(''));
+            originalWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase(); // Store the original word
+            const shuffledLetters = shuffleArray(originalWord.split(''));
             renderTiles(shuffledLetters);
-            document.getElementById('words-found').style.display = 'none';
-            document.getElementById('possible-words').style.display = 'none';
+            wordsSection.style.display = 'none';
+            wordsFoundElement.style.display = 'none';
+            possibleWordsElement.style.display = 'none';
         }
     }
 
@@ -178,32 +189,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function calculatePossibleWords(tiles, game) {
-        possibleWords.clear();
-        const tileCounts = tiles.reduce((acc, letter) => {
-            acc[letter] = (acc[letter] || 0) + 1;
+        possibleWords = [];
+        const tileCount = tiles.reduce((acc, tile) => {
+            acc[tile] = (acc[tile] || 0) + 1;
             return acc;
         }, {});
-
+    
         currentWordList.forEach(word => {
-            const wordCounts = word.split('').reduce((acc, letter) => {
-                acc[letter] = (acc[letter] || 0) + 1;
-                return acc;
-            }, {});
-
-            let canForm = true;
-            for (let letter in wordCounts) {
-                if (!tileCounts[letter] || wordCounts[letter] > tileCounts[letter]) {
-                    canForm = false;
-                    break;
-                }
+            const wordCount = {};
+            for (const letter of word) {
+                wordCount[letter] = (wordCount[letter] || 0) + 1;
             }
-
-            if (canForm) {
-                possibleWords.add(word);
+    
+            if (Object.keys(wordCount).every(letter => wordCount[letter] <= (tileCount[letter] || 0))) {
+                possibleWords.push(word);
             }
         });
-
-        updatePossibleWordsCount();
+    
+        document.getElementById('possible-words-count').textContent = possibleWords.length;
     }
 
     function updatePossibleWordsCount() {
@@ -212,8 +215,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateFoundWordsList() {
-        const wordsFoundListElement = document.getElementById('words-found-list');
-        wordsFoundListElement.textContent = Array.from(foundWords).join(', ');
+        const foundWordsListElement = document.getElementById('words-found-list');
+        foundWordsListElement.textContent = Array.from(foundWords).join(', ');
     }
 
     function collectWordFromBoard() {
@@ -273,12 +276,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function giveUp() {
+        const resultContainer = document.getElementById('result-container');
+        if (currentGameMode === "2-Letter Words" || currentGameMode === "3-Letter Words") {
+            const remainingWords = Array.from(new Set(possibleWords.filter(word => !foundWords.has(word))));
+            resultContainer.innerHTML = `<p>Words you didn't find: ${remainingWords.join(', ')}</p>`;
+        } else {
+            resultContainer.innerHTML = `<p>The word was: ${originalWord}</p>`;
+        }
+    }
+
     createBoard();
     renderTiles([]);
 
-    // Expose renderTiles, submitWord, loadWordList, and resetBoard to the global scope
+    // Expose renderTiles, submitWord, loadWordList, resetBoard, and giveUp to the global scope
     window.renderTiles = renderTiles;
     window.submitWord = submitWord;
     window.loadWordList = loadWordList;
     window.resetBoard = resetBoard;
+    window.giveUp = giveUp;
 });

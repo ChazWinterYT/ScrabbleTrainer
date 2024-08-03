@@ -222,15 +222,14 @@ main > * {
     min-height: 1.5em;
 }
 
-#words-found {
-    margin-top: 10px;
-    font-size: 1em;
-    color: #dfb6b6;
+#words-section {
+    margin-top: 5px;
 }
 
+#words-found,
 #possible-words {
-    margin-top: 5px;
-    font-size: 1em;
+    margin-top: 10px;
+    font-size: 1.0em;
     color: #dfb6b6;
 }
 
