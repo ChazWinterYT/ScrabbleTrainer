@@ -1,4 +1,15 @@
 /* styles.css */
+
+@font-face {
+    font-family: 'Scramble';
+    src: url('../fonts/scramble.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Tilez';
+    src: url('../fonts/tilez.ttf') format('truetype');
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #36180d; 
@@ -24,6 +35,22 @@ header.universal-header {
 header.universal-header h1 {
     margin: 0;
     flex-grow: 1;
+}
+
+.site-title {
+    flex-grow: 1;
+    display: inline-block;
+    width: 10px; 
+    height: 50px; 
+    margin: 1px;
+    background-color: #f2e6d9; /* Scrabble tile color */
+    color: #333;
+    font-family: 'Tilez', sans-serif; /* Use the Scramble or Tilez font */
+    font-size: 4em;
+    text-align: center;
+    line-height: 50px; /* Adjust to match tile height */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 button.home-button {
@@ -110,4 +137,24 @@ main > * {
 .small-text {
     font-size: 0.8em;
     color: #dfb6b6; 
+}
+
+/* Style for the Scrabble tiles */
+.tile {
+    display: inline-block;
+    width: 50px; 
+    height: 50px; 
+    margin: 1px;
+    background-color: #f2e6d9; /* Scrabble tile color */
+    color: #333;
+    font-family: 'Tilez', sans-serif; /* Use the Scramble or Tilez font */
+    font-size: 4em;
+    text-align: center;
+    line-height: 50px; /* Adjust to match tile height */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tile:active {
+    cursor: grabbing;
 }
