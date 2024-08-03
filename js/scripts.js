@@ -350,6 +350,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createBoard();
     renderTiles([]);
+    const removeTileText = document.getElementById('remove-tile-text');
+    if (isTouchDevice) {
+        removeTileText.innerHTML = '<p>To remove a tile from the board, drag it off the game grid.</p>'
+    } else {
+        removeTileText.innerHTML = '<p>To remove a file from the board, double click it.</p>'
+    }
 
     // Expose renderTiles, submitWord, loadWordList, resetBoard, and giveUp to the global scope
     window.renderTiles = renderTiles;
