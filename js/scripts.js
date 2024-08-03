@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayResult(message, isSuccess) {
         const resultContainer = document.getElementById('result-container');
         resultContainer.textContent = message;
-        resultContainer.style.color = isSuccess ? 'lime' : 'yellow';
+        resultContainer.style.color = isSuccess ? 'lime' : 'red';
     }
 
     function submitWord() {
