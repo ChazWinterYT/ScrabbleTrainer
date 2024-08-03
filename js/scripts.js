@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function dragStart(e) {
         e.target.classList.add('dragging');
         e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.dataTransfer.setData('source', e.target.parentElement.id);
     }
 
     function dragEnd(e) {
@@ -60,9 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function drop(e) {
         e.preventDefault();
         const letter = e.dataTransfer.getData('text/plain');
-        const tile = createTile(letter); // Clone the tile
-        e.target.innerHTML = ''; // Clear the cell
-        e.target.appendChild(tile); // Append the cloned tile to the cell
+        const sourceId = e.dataTransfer.getData('source');
+
+        if (e.target.className.includes('cell') && !e.target.hasChildNodes()) {
+            const tile = document.querySelector(`.dragging`);
+            e.target.appendChild(tile);
+        } else if (sourceId === 'board' && e.target.id === 'tiles-container') {
+            const tile = document.querySelector(`.dragging`);
+            e.target.appendChild(tile);
+        }
     }
 
     async function loadWordList(game) {
@@ -88,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayResult(message, isSuccess) {
         const resultContainer = document.getElementById('result-container');
         resultContainer.textContent = message;
-        resultContainer.style.color = isSuccess ? 'lime' : 'red';
+        resultContainer.style.color = isSuccess ? 'green' : 'red';
     }
 
     function submitWord() {
