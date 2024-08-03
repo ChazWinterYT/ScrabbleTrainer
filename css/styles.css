@@ -158,3 +158,26 @@ main > * {
 .tile:active {
     cursor: grabbing;
 }
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(15, 40px); /* 15 columns of 40px each */
+    grid-template-rows: repeat(15, 40px); /* 15 rows of 40px each */
+    gap: 2px; /* Gap between cells */
+    margin-top: 20px;
+}
+
+.board .cell {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f2e6d9;
+    font-family: 'Scramble', sans-serif;
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
