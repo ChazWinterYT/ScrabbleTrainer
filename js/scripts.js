@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
+    let initialTiles = [];
 
     function createTile(letter) {
         const tile = document.createElement('div');
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tile.draggable = true;
         tile.addEventListener('dragstart', dragStart);
         tile.addEventListener('dragend', dragEnd);
+        tile.addEventListener('dblclick', returnToRack);
         return tile;
     }
 
@@ -18,10 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const letters = 'EXAMPLE'.split('');
         
         tilesContainer.innerHTML = ''; // Clear existing tiles
+        initialTiles = []; // Clear initial tiles array
 
         letters.forEach(letter => {
             const tile = createTile(letter);
             tilesContainer.appendChild(tile);
+            initialTiles.push(tile);
         });
     }
 
@@ -72,6 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function returnToRack(e) {
+        const tile = e.target;
+        const tilesContainer = document.getElementById('tiles-container');
+        if (tile.parentElement.className.includes('cell')) {
+            tilesContainer.appendChild(tile);
+        }
+    }
+
     async function loadWordList(game) {
         const wordListUrl = `assets/${game}.json`; // URL to the word list JSON file
         const response = await fetch(wordListUrl);
@@ -107,11 +119,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function resetBoard() {
+        const tilesContainer = document.getElementById('tiles-container');
+        const board = document.getElementById('board');
+        tilesContainer.innerHTML = ''; // Clear existing tiles in the rack
+
+        // Return all tiles to the initial container
+        initialTiles.forEach(tile => {
+            tilesContainer.appendChild(tile);
+        });
+
+        // Clear the board
+        const cells = board.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.innerHTML = '';
+        });
+    }
+
     createBoard();
     renderTiles();
 
-    // Expose renderTiles and submitWord to the global scope
+    // Expose renderTiles, submitWord, loadWordList, and resetBoard to the global scope
     window.renderTiles = renderTiles;
     window.submitWord = submitWord;
     window.loadWordList = loadWordList;
+    window.resetBoard = resetBoard;
 });

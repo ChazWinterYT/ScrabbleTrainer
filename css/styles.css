@@ -91,6 +91,7 @@ nav li {
 
 button {
     padding: 10px 20px;
+    margin: 2px;
     font-size: 1em;
     cursor: pointer;
     border: none;
