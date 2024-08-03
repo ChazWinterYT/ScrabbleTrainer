@@ -13,6 +13,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12' # or the version you're using
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run build script
+      run: node build.js
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -21,4 +32,4 @@ jobs:
         aws-region: us-east-1
 
     - name: Sync S3 bucket
-      run: aws s3 sync ./ s3://chazwinter.com/ScrabbleTrainer --delete --exclude ".git/*" --exclude ".github/*" --exclude "README.md"
+      run: aws s3 sync ./ s3://chazwinter.com/ScrabbleTrainer --delete --exclude ".git/*" --exclude ".github/*" --exclude "README.md" --exclude "build.js"

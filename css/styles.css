@@ -203,3 +203,10 @@ main > * {
     font-size: 1.5em;
     min-height: 1.5em;
 }
+
+footer {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #dfb6b6; 
+    text-align: center;
+}
