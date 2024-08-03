@@ -7,39 +7,71 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
+header.universal-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0073e6;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header.universal-header h1 {
+    margin: 0;
+    flex-grow: 1;
+}
+
+button.home-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: #005bb5;
+    color: white;
+    border-radius: 5px;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+button.home-button:hover {
+    background-color: #003f7f;
 }
 
 nav {
-    width: 200px;
-    margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 nav li {
-    margin: 10px 0;
+    margin: 5px;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
+    padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
     border: none;
     background-color: #0073e6;
     color: white;
     border-radius: 5px;
+    flex-grow: 1;
+    flex-basis: 30%;
 }
 
 button:hover {
@@ -47,19 +79,31 @@ button:hover {
 }
 
 .container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
 }
 
 main {
-    flex-grow: 1;
+    width: 100%;
+    max-width: 1000px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 60%;
     min-height: 400px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main > * {
+    width: 100%;
+    text-align: center;
 }
 
 .small-text {

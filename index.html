@@ -6,8 +6,11 @@
     <title>Scrabble Trainer - chazwinter.com</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
+    <header class="universal-header">
+        <h1>Scrabble Trainer</h1>
+        <button class="home-button" onclick="location.href='/'">Back to Home</button>
+    </header>
     <div class="container">
         <header>
             <h1>Scrabble Trainer</h1>
@@ -16,7 +19,6 @@
             <ul>
                 <li><button onclick="loadGame('two-letter-words')">2-Letter Words</button></li>
                 <li><button onclick="loadGame('three-letter-words')">Uncommon 3-Letter Words</button></li>
-                <li><button onclick="loadGame('jqxz-words')">JQXZ Words</button></li>
                 <li><button onclick="loadGame('q-without-u-words')">Q without U Words</button></li>
                 <li><button onclick="loadGame('vowel-heavy-words')">Vowel Heavy Words</button></li>
                 <li><button onclick="loadGame('jqxz-words-4-letter')">JQXZ Words (4 letter)</button></li>
@@ -30,5 +32,4 @@
     </div>
     <script src="js/scripts.js"></script>
 </body>
-
 </html>
