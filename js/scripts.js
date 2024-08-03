@@ -278,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function giveUp() {
         const resultContainer = document.getElementById('result-container');
+        resultContainer.style.color = 'lime'
         if (currentGameMode === "2-Letter Words" || currentGameMode === "3-Letter Words") {
             const remainingWords = Array.from(new Set(possibleWords.filter(word => !foundWords.has(word))));
             resultContainer.innerHTML = `<p>Words you didn't find: ${remainingWords.join(', ')}</p>`;
