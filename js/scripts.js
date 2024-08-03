@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
     let initialTiles = [];
     let currentGameMode = '';
+    let foundWords = new Set();
+    let possibleWords = new Set();
 
     const gameModes = {
         "two-letter-words": {
@@ -147,12 +149,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Reset the board before rendering new tiles
         resetBoard();
+        foundWords.clear();
+        updateFoundWordsList();
 
-        // Select a random word and shuffle its letters
-        const randomWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase();
-        const shuffledLetters = shuffleArray(randomWord.split(''));
+        if (game === "two-letter-words" || game === "three-letter-words") {
+            const randomTiles = generateRandomTiles();
+            renderTiles(randomTiles);
+            calculatePossibleWords(randomTiles, game);
+            document.getElementById('words-found').style.display = 'block';
+            document.getElementById('possible-words').style.display = 'block';
+        } else {
+            // Select a random word and shuffle its letters
+            const randomWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase();
+            const shuffledLetters = shuffleArray(randomWord.split(''));
+            renderTiles(shuffledLetters);
+            document.getElementById('words-found').style.display = 'none';
+            document.getElementById('possible-words').style.display = 'none';
+        }
+    }
 
-        renderTiles(shuffledLetters);
+    function generateRandomTiles() {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let randomTiles = [];
+        for (let i = 0; i < 7; i++) {
+            randomTiles.push(letters[Math.floor(Math.random() * letters.length)]);
+        }
+        return randomTiles;
+    }
+
+    function calculatePossibleWords(tiles, game) {
+        possibleWords.clear();
+        const tileCounts = tiles.reduce((acc, letter) => {
+            acc[letter] = (acc[letter] || 0) + 1;
+            return acc;
+        }, {});
+
+        currentWordList.forEach(word => {
+            const wordCounts = word.split('').reduce((acc, letter) => {
+                acc[letter] = (acc[letter] || 0) + 1;
+                return acc;
+            }, {});
+
+            let canForm = true;
+            for (let letter in wordCounts) {
+                if (!tileCounts[letter] || wordCounts[letter] > tileCounts[letter]) {
+                    canForm = false;
+                    break;
+                }
+            }
+
+            if (canForm) {
+                possibleWords.add(word);
+            }
+        });
+
+        updatePossibleWordsCount();
+    }
+
+    function updatePossibleWordsCount() {
+        const possibleWordsCountElement = document.getElementById('possible-words-count');
+        possibleWordsCountElement.textContent = possibleWords.size;
+    }
+
+    function updateFoundWordsList() {
+        const wordsFoundListElement = document.getElementById('words-found-list');
+        wordsFoundListElement.textContent = Array.from(foundWords).join(', ');
     }
 
     function collectWordFromBoard() {
@@ -184,12 +245,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function submitWord() {
         const word = collectWordFromBoard().toUpperCase();
-        if (word.length === 0) {
-            displayResult(`Invalid! No letters on the board.`, false);
-        } else if (word === '-1') {
-            displayResult(`Invalid! Letters must be adjacent on the same row.`, false);
-        } else if (currentWordList.includes(word)) {
+        if (word === '-1') {
+            displayResult("Letters must be touching and on the same row.", false);
+        } else if (word.length === 0) {
+            displayResult("Please form a word on the board.", false);
+        } else if (currentWordList.includes(word) && !foundWords.has(word)) {
+            foundWords.add(word);
+            updateFoundWordsList();
             displayResult(`Correct! ${word} is a valid word.`, true);
+        } else if (foundWords.has(word)) {
+            displayResult(`You already found the word ${word}.`, false);
         } else {
             displayResult(`Incorrect! ${word} is not in the ${currentGameMode} list.`, false);
         }
@@ -198,24 +263,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetBoard() {
         const tilesContainer = document.getElementById('tiles-container');
         const board = document.getElementById('board');
-        tilesContainer.innerHTML = ''; // Clear existing tiles in the rack
-    
-        // Return all tiles to the initial container
-        initialTiles.forEach(tile => {
-            tilesContainer.appendChild(tile);
-        });
-    
-        tilesContainer.classList.remove('empty');
-    
+
         // Clear the board
         const cells = board.querySelectorAll('.cell');
         cells.forEach(cell => {
-            cell.innerHTML = '';
+            if (cell.hasChildNodes()) {
+                tilesContainer.appendChild(cell.firstChild);
+            }
         });
     }
 
     createBoard();
-    renderTiles('EXAMPLE'.split('')); // Initial render with example tiles
+    renderTiles([]);
 
     // Expose renderTiles, submitWord, loadWordList, and resetBoard to the global scope
     window.renderTiles = renderTiles;

@@ -184,7 +184,7 @@ main > * {
 
 /* Placeholder style */
 #tiles-container.empty::after {
-    content: "No tiles available";
+    content: "Tiles will appear after selecting a game mode.";
     color: #888;
     font-size: 1em;
     text-align: center;
@@ -220,6 +220,18 @@ main > * {
     margin-bottom: 10px;
     font-size: 1.5em;
     min-height: 1.5em;
+}
+
+#words-found {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #dfb6b6;
+}
+
+#possible-words {
+    margin-top: 5px;
+    font-size: 1em;
+    color: #dfb6b6;
 }
 
 footer {
