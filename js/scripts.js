@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayResult(message, isSuccess) {
         const resultContainer = document.getElementById('result-container');
         resultContainer.textContent = message;
-        resultContainer.style.color = isSuccess ? 'green' : 'red';
+        resultContainer.style.color = isSuccess ? 'green' : 'yellow';
     }
 
     function submitWord() {
