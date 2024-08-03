@@ -1,7 +1,7 @@
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #1b1b2f; 
+    background-color: #36180d; 
     color: #e0e0e0; 
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ header.universal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #162447; 
+    background-color: #1a0b06; 
     color: #ffffff; 
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
@@ -31,7 +31,7 @@ button.home-button {
     font-size: 1em;
     cursor: pointer;
     border: none;
-    background-color: #533483; 
+    background-color: #831c1c; 
     color: #ffffff;
     border-radius: 5px;
     margin-left: 20px;
@@ -39,7 +39,7 @@ button.home-button {
 }
 
 button.home-button:hover {
-    background-color: #6b4f9c; 
+    background-color: #915050; 
 }
 
 nav {
@@ -67,7 +67,7 @@ button {
     font-size: 1em;
     cursor: pointer;
     border: none;
-    background-color: #533483; 
+    background-color: #831c1c; 
     color: #ffffff;
     border-radius: 5px;
     flex-grow: 1;
@@ -75,7 +75,7 @@ button {
 }
 
 button:hover {
-    background-color: #6b4f9c; 
+    background-color: #915050; 
 }
 
 .container {
@@ -91,7 +91,7 @@ main {
     width: 100%;
     max-width: 1000px;
     padding: 20px;
-    background-color: #162447; 
+    background-color: #683e2a; 
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
     min-height: 400px;
@@ -108,5 +108,5 @@ main > * {
 
 .small-text {
     font-size: 0.8em;
-    color: #a29bfe; 
+    color: #dfb6b6; 
 }
