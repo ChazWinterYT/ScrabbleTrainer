@@ -172,6 +172,24 @@ main > * {
     cursor: grabbing;
 }
 
+/* Style for the tiles container */
+#tiles-container {
+    min-height: 60px; /* Adjust this value based on your needs */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #444; 
+    padding: 5px; 
+}
+
+/* Placeholder style */
+#tiles-container.empty::after {
+    content: "No tiles available";
+    color: #888;
+    font-size: 1em;
+    text-align: center;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(15, 50px); 

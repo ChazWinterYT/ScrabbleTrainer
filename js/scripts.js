@@ -57,12 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         tilesContainer.innerHTML = ''; // Clear existing tiles
         initialTiles = []; // Clear initial tiles array
-
-        letters.forEach(letter => {
-            const tile = createTile(letter);
-            tilesContainer.appendChild(tile);
-            initialTiles.push(tile);
-        });
+    
+        if (letters.length === 0) {
+            tilesContainer.classList.add('empty');
+        } else {
+            tilesContainer.classList.remove('empty');
+            letters.forEach(letter => {
+                const tile = createTile(letter);
+                tilesContainer.appendChild(tile);
+                initialTiles.push(tile);
+            });
+        }
     }
 
     function createBoard() {
@@ -178,12 +183,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const tilesContainer = document.getElementById('tiles-container');
         const board = document.getElementById('board');
         tilesContainer.innerHTML = ''; // Clear existing tiles in the rack
-
+    
         // Return all tiles to the initial container
         initialTiles.forEach(tile => {
             tilesContainer.appendChild(tile);
         });
-
+    
+        tilesContainer.classList.remove('empty');
+    
         // Clear the board
         const cells = board.querySelectorAll('.cell');
         cells.forEach(cell => {
