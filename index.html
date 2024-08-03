@@ -1,2 +1,31 @@
-<b>Imagine if Jackie sees this and finds out that I love her</b>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrabble Trainer - chazwinter.com</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
 
+<body>
+    <div class="container">
+        <header>
+            <h1>Scrabble Trainer</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><button onclick="loadGame('two-letter-words')">2-Letter Words</button></li>
+                <li><button onclick="loadGame('three-letter-words')">Uncommon 3-Letter Words</button></li>
+                <li><button onclick="loadGame('jqxz-words')">JQXZ Words</button></li>
+                <li><button onclick="loadGame('q-without-u-words')">Q without U Words</button></li>
+                <!-- Add more categories as needed -->
+            </ul>
+        </nav>
+        <main id="play-area">
+            <p>Select a game variation to start training.</p>
+        </main>
+    </div>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
