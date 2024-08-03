@@ -43,7 +43,7 @@ header.universal-header h1 {
 .site-title {
     flex-grow: 1;
     display: inline-block;
-    width: 10px; 
+    width: 1px; 
     height: 50px; 
     margin: 1px;
     background-color: #f2e6d9; /* Scrabble tile color */
