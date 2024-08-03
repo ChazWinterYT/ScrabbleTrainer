@@ -61,3 +61,7 @@ main {
     width: 60%;
     min-height: 400px;
 }
+
+.small-text {
+    font-size: 0.8em;
+}
