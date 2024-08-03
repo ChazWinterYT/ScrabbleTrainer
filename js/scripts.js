@@ -137,10 +137,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function collectWordFromBoard() {
         const cells = document.querySelectorAll('.board .cell');
         let collectedWord = '';
+        let prevIndex = null;
 
-        cells.forEach(cell => {
+        cells.forEach((cell, index) => {
             if (cell.textContent.trim() !== '') {
+                if (prevIndex !== null && index !== prevIndex + 1) {
+                    // If there's a gap in the word, set collectedWord to 'invalid'
+                    collectedWord = '-1';
+                    return;
+                }
+
                 collectedWord += cell.textContent.trim();
+                prevIndex = index;
             }
         });
 
@@ -150,12 +158,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayResult(message, isSuccess) {
         const resultContainer = document.getElementById('result-container');
         resultContainer.textContent = message;
-        resultContainer.style.color = isSuccess ? 'green' : 'yellow';
+        resultContainer.style.color = isSuccess ? 'lime' : 'yellow';
     }
 
     function submitWord() {
         const word = collectWordFromBoard().toUpperCase();
-        if (currentWordList.includes(word)) {
+        if (word.length === 0) {
+            displayResult(`Invalid! No letters on the board.`, false);
+        } else if (word === '-1') {
+            displayResult(`Invalid! Letters must be adjacent on the same row.`, false);
+        } else if (currentWordList.includes(word)) {
             displayResult(`Correct! ${word} is a valid word.`, true);
         } else {
             displayResult(`Incorrect! ${word} is not in the ${currentGameMode} list.`, false);
