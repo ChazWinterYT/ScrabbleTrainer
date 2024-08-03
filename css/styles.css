@@ -17,7 +17,7 @@ header.universal-header {
     align-items: center;
     background-color: #1a0b06; 
     color: #ffffff; 
-    padding: 10px 20px;
+    padding: 10px 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
 }
 
@@ -35,7 +35,7 @@ button.home-button {
     color: #ffffff;
     border-radius: 5px;
     margin-left: 20px;
-    flex-shrink: 0;
+    flex-shrink: 10;
 }
 
 button.home-button:hover {
@@ -69,6 +69,7 @@ button {
     border: none;
     background-color: #831c1c; 
     color: #ffffff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); 
     border-radius: 5px;
     flex-grow: 1;
     flex-basis: 30%;
@@ -93,7 +94,7 @@ main {
     padding: 20px;
     background-color: #683e2a; 
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
     min-height: 400px;
     margin-bottom: 20px;
     display: flex;
