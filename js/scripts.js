@@ -51,22 +51,29 @@ document.addEventListener("DOMContentLoaded", () => {
         return tile;
     }
 
-    function renderTiles() {
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function renderTiles(letters) {
         const tilesContainer = document.getElementById('tiles-container');
-        const letters = 'EXAMPLE'.split('');
-        
         tilesContainer.innerHTML = ''; // Clear existing tiles
         initialTiles = []; // Clear initial tiles array
-    
+
+        letters.forEach(letter => {
+            const tile = createTile(letter);
+            tilesContainer.appendChild(tile);
+            initialTiles.push(tile);
+        });
+
         if (letters.length === 0) {
             tilesContainer.classList.add('empty');
         } else {
             tilesContainer.classList.remove('empty');
-            letters.forEach(letter => {
-                const tile = createTile(letter);
-                tilesContainer.appendChild(tile);
-                initialTiles.push(tile);
-            });
         }
     }
 
@@ -74,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const board = document.getElementById('board');
         board.innerHTML = ''; // Clear existing board
 
-        const rows = 5; // Number of rows
-        const cols = 15; // Number of columns
+        const rows = 3; // Number of rows
+        const cols = 10; // Number of columns
 
         for (let i = 0; i < rows * cols; i++) { // Create cells
             const cell = document.createElement('div');
@@ -137,6 +144,15 @@ document.addEventListener("DOMContentLoaded", () => {
         gameModeElement.textContent = gameModes[game].name;
         gameModeDescriptionElement.textContent = gameModes[game].description;
         currentGameMode = gameModes[game].name;
+
+        // Reset the board before rendering new tiles
+        resetBoard();
+
+        // Select a random word and shuffle its letters
+        const randomWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase();
+        const shuffledLetters = shuffleArray(randomWord.split(''));
+
+        renderTiles(shuffledLetters);
     }
 
     function collectWordFromBoard() {
@@ -199,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createBoard();
-    renderTiles();
+    renderTiles('EXAMPLE'.split('')); // Initial render with example tiles
 
     // Expose renderTiles, submitWord, loadWordList, and resetBoard to the global scope
     window.renderTiles = renderTiles;

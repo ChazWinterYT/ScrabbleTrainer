@@ -192,8 +192,8 @@ main > * {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(15, 50px); 
-    grid-template-rows: repeat(5, 50px); 
+    grid-template-columns: repeat(12, 50px); 
+    grid-template-rows: repeat(3, 50px); 
     gap: 1px; /* Gap between cells */
     margin-top: 20px;
     margin-bottom: 10px;
@@ -209,7 +209,7 @@ main > * {
     align-items: center;
     justify-content: center;
     color: #f2e6d9;
-    font-family: 'Scramble', sans-serif;
+    font-family: 'Tilez', sans-serif;
     font-size: 1.0em;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
