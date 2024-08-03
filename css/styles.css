@@ -1,5 +1,3 @@
-/* styles.css */
-
 @font-face {
     font-family: 'Scramble';
     src: url('../fonts/scramble.ttf') format('truetype');
@@ -8,6 +6,10 @@
 @font-face {
     font-family: 'Tilez';
     src: url('../fonts/tilez.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
 body {
@@ -19,6 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 header.universal-header {
@@ -90,7 +93,7 @@ nav li {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin: 2px;
     font-size: 1em;
     cursor: pointer;
@@ -107,10 +110,10 @@ button:hover {
     background-color: #915050; 
 }
 
-.container {
+.page-title {
     width: 100%;
     max-width: 1200px;
-    padding: 0 20px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -138,13 +141,13 @@ main > * {
 #game-mode {
     font-size: 2em;
     color: #f2e6d9; 
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 #game-mode-description {
     font-size: 1.2em;
     color: #dfb6b6; 
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .small-text {
@@ -180,6 +183,8 @@ main > * {
     align-items: center;
     border: 1px solid #444; 
     padding: 5px; 
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 /* Placeholder style */
@@ -192,12 +197,14 @@ main > * {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(12, 50px); 
+    grid-template-columns: repeat(10, 50px); 
     grid-template-rows: repeat(3, 50px); 
     gap: 1px; /* Gap between cells */
     margin-top: 20px;
     margin-bottom: 10px;
     justify-content: center;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .board .cell {
@@ -238,4 +245,6 @@ footer {
     font-size: 0.8em;
     color: #dfb6b6; 
     text-align: center;
+    max-width: 100%;
+    overflow-x: auto;
 }
