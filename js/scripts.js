@@ -3,6 +3,42 @@
 document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
     let initialTiles = [];
+    let currentGameMode = '';
+
+    const gameModes = {
+        "two-letter-words": {
+            name: "2-Letter Words",
+            description: "Given 7 random tiles, find as many 2 letter words as you can!"
+        },
+        "three-letter-words": {
+            name: "3-Letter Words",
+            description: "Given 7 random tiles, find as many 3 letter words as you can!"
+        },
+        "q-without-u-words": {
+            name: "Q without U Words",
+            description: "Practice words containing Q without a following U."
+        },
+        "vowel-heavy-words": {
+            name: "Vowel Heavy Words",
+            description: "Practice words that are heavy on vowels."
+        },
+        "jqxz-words-4-letter": {
+            name: "JQXZ Words (4 letter)",
+            description: "Practice four-letter words containing J, Q, X, or Z."
+        },
+        "jqxz-words-5-letter": {
+            name: "JQXZ Words (5 letter)",
+            description: "Practice five-letter words containing J, Q, X, or Z."
+        },
+        "words-without-vowels": {
+            name: "Words Without Vowels",
+            description: "Practice words that do not contain vowels."
+        },
+        "500-more-useful-words": {
+            name: "500+ More Useful Words",
+            description: "Practice 500+ more useful words."
+        }
+    };
 
     function createTile(letter) {
         const tile = document.createElement('div');
@@ -84,15 +120,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function loadWordList(game, gameModeText) {
+    async function loadWordList(game) {
         const wordListUrl = `assets/${game}.json`; // URL to the word list JSON file
         const response = await fetch(wordListUrl);
         const data = await response.json();
         currentWordList = data.words;
 
-        // Update the game mode text
+        // Update the game mode text and description
         const gameModeElement = document.getElementById('game-mode');
-        gameModeElement.textContent = gameModeText;
+        const gameModeDescriptionElement = document.getElementById('game-mode-description');
+        gameModeElement.textContent = gameModes[game].name;
+        gameModeDescriptionElement.textContent = gameModes[game].description;
+        currentGameMode = gameModes[game].name;
     }
 
     function collectWordFromBoard() {
@@ -119,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentWordList.includes(word)) {
             displayResult(`Correct! ${word} is a valid word.`, true);
         } else {
-            displayResult(`Incorrect! ${word} is not in the word list.`, false);
+            displayResult(`Incorrect! ${word} is not in the ${currentGameMode} list.`, false);
         }
     }
 

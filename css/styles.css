@@ -136,9 +136,15 @@ main > * {
 }
 
 #game-mode {
-    font-size: 1.5em;
-    color: #e0e0e0; 
-    margin-bottom: 20px;
+    font-size: 2em;
+    color: #f2e6d9; 
+    margin-bottom: 10px;
+}
+
+#game-mode-description {
+    font-size: 1.2em;
+    color: #dfb6b6; 
+    margin-bottom: 10px;
 }
 
 .small-text {
@@ -172,7 +178,7 @@ main > * {
     grid-template-rows: repeat(5, 50px); 
     gap: 1px; /* Gap between cells */
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     justify-content: center;
 }
 
