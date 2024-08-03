@@ -273,7 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateFoundWordsList() {
         const foundWordsListElement = document.getElementById('words-found-list');
         const wordsArray = Array.from(foundWords);
-        foundWordsListElement.textContent = `${wordsArray.length} [${wordsArray.join(', ')}]`;
+        if (wordsArray.length === 0) {
+            foundWordsListElement.textContent = `${wordsArray.length}`;
+        } else {
+            foundWordsListElement.textContent = `${wordsArray.length} [${wordsArray.join(', ')}]`;
+        }
     }
 
     function collectWordFromBoard() {
