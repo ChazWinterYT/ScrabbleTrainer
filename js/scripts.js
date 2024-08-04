@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
             name: "Top 5000 7-Letter Words",
             description: "Given 7 common tiles, find as many 7 letter bingos as you can!"
         },
+        "top-100-8-letter-words": {
+            name: "Top 100 8-Letter Words",
+            description: "Practice the most common 8 letter words."
+        },
         "q-without-u-words": {
             name: "Q without U Words",
             description: "Practice words containing Q without a following U."
