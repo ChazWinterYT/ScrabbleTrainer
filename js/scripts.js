@@ -1,5 +1,16 @@
 // scripts.js
 
+/*
+THIS FILE IS DEPCRETATED
+All logic has been moved into other files. 
+    main.js: Initializes the game and exposes functions to the global scope.
+    gameLogic.js: Contains the game logic functions like createBoard, renderTiles, loadWordList, submitWord, resetBoard, and giveUp.
+    tiles.js: Handles tile creation and drag-and-drop functionality.
+    utils.js: Contains utility functions like isMobileDevice.
+    config.js: Holds game configuration data like gameModes.
+Do not use this file. It can be deleted at any time.
+*/
+
 document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
     let initialTiles = [];
