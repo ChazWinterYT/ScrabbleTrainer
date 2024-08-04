@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentWordList = [];
     let initialTiles = [];
     let currentGameMode = '';
+    let isListGame = false;
     let originalWord = '';
     let foundWords = new Set();
     let possibleWords = new Set();
@@ -12,43 +13,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const gameModes = {
         "two-letter-words": {
             name: "2-Letter Words",
-            description: "Given 7 random tiles, find as many 2 letter words as you can!"
+            description: "Given 7 random tiles, find as many 2 letter words as you can!",
+            isListGame: true,
+            requiresWordLookup: false,
         },
         "three-letter-words": {
             name: "3-Letter Words",
-            description: "Given 7 random tiles, find as many 3 letter words as you can!"
+            description: "Given 7 random tiles, find as many 3 letter words as you can!",
+            isListGame: true,
+            requiresWordLookup: false,
         },
         "top-5000-7-letter-words": {
             name: "Top 5000 7-Letter Words",
-            description: "Given 7 common tiles, find as many 7 letter bingos as you can!"
+            description: "Given 7 common tiles, find as many 7 letter bingos as you can!",
+            isListGame: true,
+            requiresWordLookup: true,
         },
-        "top-100-8-letter-words": {
-            name: "Top 100 8-Letter Words",
-            description: "Practice the most common 8 letter words."
+        "top-5000-8-letter-words": {
+            name: "Top 5000 8-Letter Words",
+            description: "Given 8 common tiles, find as many 8 letter bingos as you can!",
+            isListGame: true,
+            requiresWordLookup: true,
         },
         "q-without-u-words": {
             name: "Q without U Words",
-            description: "Practice words containing Q without a following U."
+            description: "Practice words containing Q without a following U.",
+            isListGame: false,
+            requiresWordLookup: true,
         },
         "vowel-heavy-words": {
             name: "Vowel Heavy Words",
-            description: "Practice words that are heavy on vowels."
+            description: "Practice words that are heavy on vowels.",
+            isListGame: false,
+            requiresWordLookup: true,
         },
         "jqxz-words-4-letter": {
             name: "JQXZ Words (4 letter)",
-            description: "Practice four-letter words containing J, Q, X, or Z."
+            description: "Practice four-letter words containing J, Q, X, or Z.",
+            isListGame: false,
+            requiresWordLookup: true,
         },
         "jqxz-words-5-letter": {
             name: "JQXZ Words (5 letter)",
-            description: "Practice five-letter words containing J, Q, X, or Z."
+            description: "Practice five-letter words containing J, Q, X, or Z.",
+            isListGame: false,
+            requiresWordLookup: true,
         },
         "words-without-vowels": {
             name: "Words Without Vowels",
-            description: "Practice words that do not contain vowels."
+            description: "Practice words that do not contain vowels.",
+            isListGame: false,
+            requiresWordLookup: true,
         },
         "500-more-useful-words": {
             name: "500+ More Useful Words",
-            description: "Practice 500+ more useful words."
+            description: "Practice 500+ more useful words.",
+            isListGame: false,
+            requiresWordLookup: true,
         }
     };
 
@@ -225,6 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
         gameModeElement.textContent = gameModes[game].name;
         gameModeDescriptionElement.textContent = gameModes[game].description;
         currentGameMode = gameModes[game].name;
+        isListGame = gameModes[game].isListGame;
+        let requiresWordLookup = gameModes[game].requiresWordLookup;
     
         // Reset the board before rendering new tiles
         resetBoard();
@@ -235,14 +258,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const wordsFoundElement = document.getElementById('words-found');
         const possibleWordsElement = document.getElementById('possible-words');
     
-        if (game === 'two-letter-words' || game === 'three-letter-words') {
-            const randomTiles = generateRandomTiles();
+        if (isListGame && !requiresWordLookup) {
+            // Games where you guess multiple words, but the starting letters are generated randomly
+            let randomTiles = generateRandomTiles();
+            // Prevent games with 0 possible words
+            let numPossibleWords = calculatePossibleWords(randomTiles, game);
+            while (numPossibleWords === 0) {
+                randomTiles = generateRandomTiles();
+                numPossibleWords = calculatePossibleWords(randomTiles, game);
+            }
             renderTiles(randomTiles);
-            calculatePossibleWords(randomTiles, game);
             wordsSection.style.display = 'block';
             wordsFoundElement.style.display = 'block';
             possibleWordsElement.style.display = 'block';
-        } else if (game === 'top-5000-7-letter-words') {
+        } else if (isListGame && requiresWordLookup) {
+            // Games where you guess multiple words, but a source word list is used to get the starting letters
             originalWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase(); // Store the original word
             const shuffledLetters = shuffleArray(originalWord.split(''));
             renderTiles(shuffledLetters);
@@ -251,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
             wordsFoundElement.style.display = 'block';
             possibleWordsElement.style.display = 'block';
         } else {
-            // Select a random word and shuffle its letters
+            // Games you guess a single word, sourced from a master list
             originalWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase(); // Store the original word
             const shuffledLetters = shuffleArray(originalWord.split(''));
             renderTiles(shuffledLetters);
@@ -289,6 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     
         document.getElementById('possible-words-count').textContent = possibleWords.length;
+        return possibleWords.length;
     }
 
     function updatePossibleWordsCount() {
@@ -366,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function giveUp() {
         const resultContainer = document.getElementById('result-container');
         resultContainer.style.color = 'lime'
-        if (currentGameMode === "2-Letter Words" || currentGameMode === "3-Letter Words" || currentGameMode === "Top 5000 7-Letter Words") {
+        if (isListGame) {
             const remainingWords = Array.from(new Set(possibleWords.filter(word => !foundWords.has(word))));
             resultContainer.innerHTML = `<p>Words you didn't find: ${remainingWords.join(', ')}</p>`;
         } else {
