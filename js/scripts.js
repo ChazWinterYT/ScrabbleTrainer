@@ -141,13 +141,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const letter = e.dataTransfer.getData('text/plain');
         const sourceId = e.dataTransfer.getData('source');
 
-        if (e.target.className.includes('cell') && !e.target.hasChildNodes()) {
-            const tile = document.querySelector(`.dragging`);
-            e.target.appendChild(tile);
+        const draggingTile = document.querySelector('.dragging');
+        const targetTile = e.target;
+
+        if (targetTile.className.includes('tile')) {
+            swapTiles(draggingTile, targetTile);
+        } else if (e.target.className.includes('cell') && !e.target.hasChildNodes()) {
+            e.target.appendChild(draggingTile);
         } else if (sourceId === 'board' && e.target.id === 'tiles-container') {
-            const tile = document.querySelector(`.dragging`);
-            e.target.appendChild(tile);
+            e.target.appendChild(draggingTile);
         }
+    }
+
+    function swapTiles(tile1, tile2) {
+        const parent1 = tile1.parentNode;
+        const sibling1 = tile1.nextSibling === tile2 ? tile1 : tile1.nextSibling;
+        tile2.parentNode.insertBefore(tile1, tile2);
+        parent1.insertBefore(tile2, sibling1);
     }
 
     function touchStart(e) {
