@@ -39,9 +39,14 @@
                 <!-- Game board cells will be added dynamically -->
             </div>
             <div id="result-container" class="result"></div>
+
             <button onclick="submitWord()">Submit Word</button>
             <button onclick="resetBoard()">Clear Board</button>
-            <button onclick="giveUp()">Give Up</button>
+            <div class="play-button-container">
+                <button onclick="giveUp()">Give Up</button>
+                <button onclick="playAgain()">Play Again</button>
+            </div>
+            
             <div id="words-section">
                 <div id="words-found">Words Found: <span id="words-found-list"></span></div>
                 <div id="possible-words">Possible Words: <span id="possible-words-count"></span></div>

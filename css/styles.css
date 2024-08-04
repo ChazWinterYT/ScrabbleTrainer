@@ -110,6 +110,15 @@ button:hover {
     background-color: #915050; 
 }
 
+.play-button-container {
+    display: flex;
+}
+
+.play-button-container button {
+    flex: 1; /* Distribute the buttons evenly */
+    padding: 10px;
+}
+
 .page-title {
     width: 100%;
     max-width: 1200px;

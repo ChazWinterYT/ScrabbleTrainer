@@ -61,7 +61,8 @@ export async function loadWordList(game) {
     const gameModeDescriptionElement = document.getElementById('game-mode-description');
     gameModeElement.textContent = gameModes[game].name;
     gameModeDescriptionElement.textContent = gameModes[game].description;
-    currentGameMode = gameModes[game].name;
+    
+    currentGameMode = game;
     isListGame = gameModes[game].isListGame;
     let requiresWordLookup = gameModes[game].requiresWordLookup;
 
@@ -115,7 +116,7 @@ export function submitWord() {
     } else if (foundWords.has(word)) {
         displayResult(`You already found the word ${word}.`, false);
     } else {
-        displayResult(`Incorrect! ${word} is not in the ${currentGameMode} list.`, false);
+        displayResult(`Incorrect! ${word} is not in the ${gameModes[currentGameMode].name} list.`, false);
     }
 }
 
@@ -211,4 +212,8 @@ export function giveUp() {
     } else {
         resultContainer.innerHTML = `<p>The word was: ${originalWord}</p>`;
     }
+}
+
+export function playAgain() {
+    loadWordList(currentGameMode);
 }
