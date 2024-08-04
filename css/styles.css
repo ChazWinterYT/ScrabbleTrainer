@@ -24,48 +24,43 @@ body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-header.universal-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a0b06; 
-    color: #ffffff; 
-    padding: 10px 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
-}
-
-header.universal-header h1 {
-    margin: 0;
-    flex-grow: 1;
+.universal-header {
+    background-color: #f2e6d9; /* Scrabble tile color */
+    color: #333;
+    padding: 10px;
+    text-align: center;
 }
 
 .site-title {
-    flex-grow: 1;
     display: inline-block;
-    width: 1px; 
-    height: 50px; 
-    margin: 1px;
-    background-color: #f2e6d9; /* Scrabble tile color */
     color: #333;
     font-family: 'Tilez', sans-serif; /* Use the Scramble or Tilez font */
     font-size: 4em;
     text-align: center;
-    line-height: 50px; /* Adjust to match tile height */
+    line-height: 0.8; 
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.home-button-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
 button.home-button {
-    padding: 10px 20px;
+    padding: 10px 200px;
     font-size: 1em;
     cursor: pointer;
     border: none;
-    background-color: #831c1c; 
+    background-color: #831c1c;
     color: #ffffff;
     border-radius: 5px;
-    margin-left: 20px;
-    flex-shrink: 10;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
 button.home-button:hover {
@@ -102,7 +97,7 @@ button {
     color: #ffffff;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); 
     border-radius: 5px;
-    flex-grow: 2;
+    flex-grow: 1;
     flex-basis: 30%;
 }
 
