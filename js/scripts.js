@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
             name: "3-Letter Words",
             description: "Given 7 random tiles, find as many 3 letter words as you can!"
         },
+        "top-5000-7-letter-words": {
+            name: "Top 5000 7-Letter Words",
+            description: "Given 7 common tiles, find as many 7 letter bingos as you can!"
+        },
         "q-without-u-words": {
             name: "Q without U Words",
             description: "Practice words containing Q without a following U."
@@ -217,10 +221,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const wordsFoundElement = document.getElementById('words-found');
         const possibleWordsElement = document.getElementById('possible-words');
     
-        if (game === "two-letter-words" || game === "three-letter-words") {
+        if (game === 'two-letter-words' || game === 'three-letter-words') {
             const randomTiles = generateRandomTiles();
             renderTiles(randomTiles);
             calculatePossibleWords(randomTiles, game);
+            wordsSection.style.display = 'block';
+            wordsFoundElement.style.display = 'block';
+            possibleWordsElement.style.display = 'block';
+        } else if (game === 'top-5000-7-letter-words') {
+            originalWord = currentWordList[Math.floor(Math.random() * currentWordList.length)].toUpperCase(); // Store the original word
+            const shuffledLetters = shuffleArray(originalWord.split(''));
+            renderTiles(shuffledLetters);
+            calculatePossibleWords(shuffledLetters, game);
             wordsSection.style.display = 'block';
             wordsFoundElement.style.display = 'block';
             possibleWordsElement.style.display = 'block';
@@ -340,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function giveUp() {
         const resultContainer = document.getElementById('result-container');
         resultContainer.style.color = 'lime'
-        if (currentGameMode === "2-Letter Words" || currentGameMode === "3-Letter Words") {
+        if (currentGameMode === "2-Letter Words" || currentGameMode === "3-Letter Words" || currentGameMode === "Top 5000 7-Letter Words") {
             const remainingWords = Array.from(new Set(possibleWords.filter(word => !foundWords.has(word))));
             resultContainer.innerHTML = `<p>Words you didn't find: ${remainingWords.join(', ')}</p>`;
         } else {
