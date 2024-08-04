@@ -215,5 +215,10 @@ export function giveUp() {
 }
 
 export function playAgain() {
+    const resultContainer = document.getElementById('result-container');
+    if (currentGameMode === '') {
+        resultContainer.innerHTML = `<p>Select a game mode first.</p>`
+        return;
+    }
     loadWordList(currentGameMode);
 }
