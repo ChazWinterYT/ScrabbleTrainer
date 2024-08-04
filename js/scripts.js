@@ -4,7 +4,7 @@
 THIS FILE IS DEPCRETATED
 All logic has been moved into other files. 
     main.js: Initializes the game and exposes functions to the global scope.
-    gameLogic.js: Contains the game logic functions like createBoard, renderTiles, loadWordList, submitWord, resetBoard, and giveUp.
+    gameLogic.js: Contains the game logic functions like createBoard, renderTiles, etc.
     tiles.js: Handles tile creation and drag-and-drop functionality.
     utils.js: Contains utility functions like isMobileDevice.
     config.js: Holds game configuration data like gameModes.
