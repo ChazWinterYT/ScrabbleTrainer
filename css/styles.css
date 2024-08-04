@@ -55,6 +55,7 @@ button.home-button {
     background-color: #831c1c;
     color: #ffffff;
     border-radius: 5px;
+    text-wrap: nowrap;
 }
 
 .button-container {
