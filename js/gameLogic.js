@@ -208,16 +208,16 @@ export function giveUp() {
     resultContainer.style.color = 'lime'
     if (isListGame) {
         const remainingWords = Array.from(new Set(possibleWords.filter(word => !foundWords.has(word))));
-        resultContainer.innerHTML = `<p>Words you didn't find: ${remainingWords.join(', ')}</p>`;
+        resultContainer.innerHTML = `Words you didn't find: ${remainingWords.join(', ')}`;
     } else {
-        resultContainer.innerHTML = `<p>The word was: ${originalWord}</p>`;
+        resultContainer.innerHTML = `The word was: ${originalWord}`;
     }
 }
 
 export function playAgain() {
     const resultContainer = document.getElementById('result-container');
     if (currentGameMode === '') {
-        resultContainer.innerHTML = `<p>Select a game mode first.</p>`
+        resultContainer.innerHTML = `Select a game mode first.`
         return;
     }
     loadWordList(currentGameMode);
