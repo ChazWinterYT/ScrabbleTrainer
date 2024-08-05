@@ -15,7 +15,7 @@ export function createBoard() {
     board.innerHTML = ''; // Clear existing board
 
     const rows = 3; // Number of rows
-    const cols = 10; // Number of columns
+    const cols = 12; // Number of columns
 
     for (let i = 0; i < rows * cols; i++) { // Create cells
         const cell = document.createElement('div');
